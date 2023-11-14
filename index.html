@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Varela+Round&display=swap");
+* {
+  /*  add in border box sizing  */
+  box-sizing: border-box;
+}
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+div.container {
+  width: 80%;
+  margin: auto;
+}
+h1#game-title {
+  font-family: "Varela Round", sans-serif;
+  font-style: italic;
+  background-color: purple;
+  color: white;
+  border: 5px solid white;
+  border-radius: 1rem;
+  font-size: 5vw;
+}
+form#password-form {
+}
+table {
+  margin: auto;
+}
+th,
+td,
+tr {
+  vertical-align: top;
+}
+input.letter-input,
+th,
+td {
+  text-align: center;
+  font-size: 4vw;
+  /*   line-height: 2rem; */
+  width: calc(80% / 5);
+  background-color: beige;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+  /*  Now we see the need for Calculation  */
+  margin: 1rem calc(5% / 5);
+}
+
+tbody {
+  background-image: linear-gradient(purple, blue);
+}
+img#character-image {
+  width: 50%;
+  height: 50%;
+}
+h2 {
+  color: white;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+  <h1 id="game-title">Guess the Password!</h1>
+  <h2>(Choose your character below!)</h2>
+  <form id="password-form">
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td id="td0">X:<br>a<br>c</td>
+      <td id="td1">X:</td>
+      <td id="td2">X:</td>
+      <td id="td3">X:<br>b<br>d</td>
+      <td id="td4">X:</td>
+    </tbody>
+  </table>
+</div>
+<div id="fighter-stuff">
+  <img id="character-image" width="100" height="100" />
+  <select name="image-choice" id="image-select" />
+  <option value="">Select Your Fighter</option>
+  <option value="hollow-knight">Hollow Knight</option>
+  <option value="garfield">Garfield</option>
+  <option value="tohru">Tohru</option>
+</div>
+    <script>
+const passwordForm = document.getElementById("password-form");
+
+let phrase = "guess";
+let index = 0;
+
+for (let char of phrase) {
+  const letterInput = document.createElement("input");
+  letterInput.type = "text";
+  letterInput.id = index.toString();
+  letterInput.classList.add("letter-input");
+  passwordForm.appendChild(letterInput);
+  index++;
+}
+
+passwordForm.addEventListener("change", function (event) {
+  const thisInput = event.target;
+  const guess = thisInput.value;
+
+  console.log(thisInput);
+  console.log(guess);
+
+  console.log(thisInput.id);
+
+  if (guess === phrase[parseInt(thisInput.id)]) {
+    alert("You guessed right!");
+    thisInput.disabled = true;
+    thisInput.placeholder = guess;
+  } else {
+    console.log("incorrect guess");
+    document.getElementById(`td${thisInput.id}`).innerHTML += "<br>" + guess;
+    thisInput.value = "";
+  }
+});
+
+const imageSelect = document.getElementById("image-select");
+const characterImg = document.getElementById("character-image");
+
+const hollowKnightSrc =
+  "https://th.bing.com/th/id/OIP.2qP3QgENGvKNZUPZFQrbTgHaHq?pid=ImgDet&rs=1";
+const garfieldSrc =
+  "https://i.pinimg.com/736x/fa/54/b7/fa54b7e0c2b8d129fb69cd254be8093b.jpg";
+const tohruSrc =
+  "https://pm1.aminoapps.com/6628/15acbe8f0e1c18f7b9cdc686e9fb42108eee2fba_hq.jpg";
+const characterSelectSrc =
+  "https://i.ytimg.com/vi/JNdrKNaR7H4/maxresdefault.jpg";
+
+characterImg.src = characterSelectSrc;
+
+imageSelect.addEventListener("change", function () {
+  let userChoice = this.value;
+  if (userChoice === "hollow-knight") {
+    characterImg.src = hollowKnightSrc;
+  } else if (userChoice === "garfield") {
+    characterImg.src = garfieldSrc;
+  } else if (userChoice === "tohru") {
+    characterImg.src = tohruSrc;
+  }
+});
+    </script>
+</body>
+</html>
